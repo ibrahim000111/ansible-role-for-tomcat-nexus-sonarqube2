@@ -37,14 +37,6 @@
     apt: 
       name: unzip
       state: present
-  
-  - name: create directory
-    file:
-      path: "{{ sonarquebe_dir }}"
-      owner: root
-      group: root
-      mode: 0770
-      state: directory
 
 # Download the sonarqube packages from sonar community 
   - name: download the sonarqube community
@@ -52,7 +44,6 @@
       src: "{{ sonarquebe_url }}"
       dest: "{{ sonarquebe_dir }}"
       remote_src: yes
-      state: directory
   
 # copy sonarqube properties file which contains postgresql db details to remote server
 
@@ -66,11 +57,11 @@
   - name: Change ownership for sonarquebe
     file:
       path:  "{{ dir_location }}"
-      state: directory
       owner: "{{ sonarquebe_user }}"
       group: "{{ sonarquebe_group }}"
       mode: "u+rwx,g+rx,o=rx"
       recurse: yes
+      state: directory
 
 # copy sonarqube service 
 
