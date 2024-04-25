@@ -9,7 +9,7 @@
       mode: 0770
       state: directory
 
-# Download the sonarqube packages from sonar community 
+        ## Download the sonarqube packages from sonar community 
    - name: download the sonarqube community
      shell: 
         "curl https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.1.0.47736.zip --output /home/abc/sonarqube.zip"
