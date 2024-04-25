@@ -1,0 +1,20 @@
+---
+- name: Create Users & Groups
+  hosts: nexus-sonarqube-tomcat
+  tasks:
+    - name: Create group
+      group:
+        name: ubuntu
+        state: present
+
+    - name: Create Users Task
+      user:
+        name: ubuntu
+        state: present
+          # password: "{{ default_user_password | password_hash('sha512','A512') }}"
+          #shell: /bin/bash
+          #group: "{{ admin_group }}"
+          #loop:
+          #- Rajini
+          #- Kamal
+

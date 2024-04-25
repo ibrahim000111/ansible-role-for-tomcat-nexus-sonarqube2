@@ -46,28 +46,13 @@
       mode: 0770
       state: directory
 
-  # create user and group
-  - name: Create group
-    group:
-        name: "{{ sonarquebe_group }}"
-        state: present
-
-  - name: Create user
-    user:
-        name: "{{ sonarquebe_user }}"
-        state: present
-
-
 # Download the sonarqube packages from sonar community 
   - name: download the sonarqube community
-    #unarchive:
-    # src: "{{ sonarquebe_url }}"
-    #  dest: "{{ sonarquebe_dir }}" shell: 
-    shell: "curl {{ sonarquebe_url }} --output {{ sonarquebe_dir }}/sonarqube.zip"
-  - name: unzip sonarqube
-    shell: "unzip {{ sonarquebe_dir }}/sonarqube.zip -d {{ sonarquebe_dir }}"
-        # remote_src: yes
-        #state: file
+    unarchive:
+      src: "{{ sonarquebe_url }}"
+      dest: "{{ sonarquebe_dir }}"
+      remote_src: yes
+      state: file
   
 # copy sonarqube properties file which contains postgresql db details to remote server
 
@@ -76,6 +61,7 @@
        src: sonar.properties
        dest: "{{ sonarquebe_pro_location }}"
        mode: 0755
+
 
   - name: Change ownership for sonarquebe
     file:
