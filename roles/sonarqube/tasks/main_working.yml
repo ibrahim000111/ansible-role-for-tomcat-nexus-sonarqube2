@@ -56,16 +56,21 @@
     user:
         name: "{{ sonarquebe_user }}"
         state: present
- 
-  - name: Download sonarqube
-    get_url: "url={{ sonarquebe_url }} dest={{ sonarquebe_dir }}/sonarqube.zip"
-    register: download_sonarqube
 
-  - name: unarchive sonarqube
-    unarchive:
-     src: "{{ sonarquebe_dir }}/sonarqube.zip"
-     dest: "{{ sonarquebe_dir }}"  
-     remote_src: yes
+
+# Download the sonarqube packages from sonar community 
+  - name: download the sonarqube community
+    #unarchive:
+    # src: "{{ sonarquebe_url }}"
+    #  dest: "{{ sonarquebe_dir }}" shell: 
+    shell: "curl {{ sonarquebe_url }} --output {{ sonarquebe_dir }}/sonarqube.zip"
+  #- name: delete old unzip sonarqube
+  # shell: "rm -r {{ sonarquebe_dir }}/sonarqube-*"
+
+  - name: unzip sonarqube
+    shell: "unzip {{ sonarquebe_dir }}/sonarqube.zip -d {{ sonarquebe_dir }}"
+        # remote_src: yes
+        #state: file
   
 # copy sonarqube properties file which contains postgresql db details to remote server
 

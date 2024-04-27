@@ -1,0 +1,25 @@
+---
+- hosts: nexus-sonarqube-tomcat
+  tasks:
+   - name: create directory
+     file:
+      path: /home/abc2
+      owner: root
+      group: root
+      mode: 0770
+      state: directory
+
+   - name: Download sonarqube
+     get_url: "url=https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.1.0.47736.zip dest=/home/abc2/sonarqube.zip"
+     register: download_sonarqube
+   
+   - name: install unzip
+     apt:
+      name: unzip
+      state: present
+
+   - name: Extract archive
+     unarchive:
+       src: /home/abc2/sonarqube.zip
+       dest: /home/abc2/
+       remote_src: yes
